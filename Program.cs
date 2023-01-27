@@ -6,6 +6,7 @@ using System.Text;
 
 using Office_Management_.NET_MVC_Angular_JWT.Models;
 using Office_Management_.NET_MVC_Angular_JWT.Utils;
+using Office_Management_.NET_MVC_Angular_JWT.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,11 +26,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(dbContextOptions => dbContex
 );
 
 // Repositories
-//builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-//builder.Services.AddScoped<IAssetRepository, AssetRepository>();
-//builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
-//builder.Services.AddScoped<IRequisitionRepository, RequisitionRepository>();
-//builder.Services.AddScoped<ILeaveRepository, LeaveRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IAssetRepository, AssetRepository>();
+builder.Services.AddScoped<IInventoryRepository, InventoryRepository>();
+builder.Services.AddScoped<IRequisitionRepository, RequisitionRepository>();
+builder.Services.AddScoped<ILeaveRepository, LeaveRepository>();
 builder.Services.AddScoped<ITokenUtil, JWTTokenUtil>();
 builder.Services.AddScoped<IAccountUtil, AccountUtil>();
 builder.Services.AddScoped<ICommonUtil, CommonUtil>();
