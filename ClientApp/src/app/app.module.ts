@@ -1,11 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AppComponent } from './app.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 //import { NavMenuComponent } from './nav-menu/nav-menu.component';
 //import { CounterComponent } from './counter/counter.component';
 //import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -36,8 +37,6 @@ import { RequestListComponent as LeaveRequestListComponent } from './components/
 import { SummaryComponent as LeaveSummaryComponent } from './components/leave/summary/summary.component';
 import { CreateComponent as LeaveCreateComponent } from './components/leave/create/create.component';
 import { LoadingComponent } from './components/loading/loading.component';
-
-import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
