@@ -1,7 +1,7 @@
 # .NET-Office-Management
 Office Mangement Backend using .NET 7 MVC with JWT authentication and Angular with MariaDB
 
-Note: JWT token in not saved anywhere. This project only shows how we can use JWT token.
+Note: JWT token is not saved anywhere. This project only shows how we can use JWT token.
 We can save it in database and also use refresh token to generated new access token after some time peroid.
 These features may or may not be implemented in future.
 
