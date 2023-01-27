@@ -7,6 +7,8 @@ using System.Text;
 using Office_Management_.NET_MVC_Angular_JWT.Models;
 using Office_Management_.NET_MVC_Angular_JWT.Utils;
 using Office_Management_.NET_MVC_Angular_JWT.Repositories;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // MariaDB
-var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
+//var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
+var connectionString = "server=localhost;port=3306;user=root;password=;database=inventory_dotnet_test;AllowZeroDateTime=true;";
 builder.Services.AddDbContext<ApplicationDbContext>(dbContextOptions => dbContextOptions
         .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         // The following three options help with debugging, but should
@@ -36,7 +39,8 @@ builder.Services.AddScoped<IAccountUtil, AccountUtil>();
 builder.Services.AddScoped<ICommonUtil, CommonUtil>();
 
 // JWT
-var jwtKey = builder.Configuration["JwtKey"];
+//var jwtKey = builder.Configuration.GetValue<string>("JwtKey");
+var jwtKey = "BprQAVEPuh9U31ruRa70Z2cwqiyzOsavobrkpD6lXvy62w4p4P8ZLGUSAsWFvwTdCysc2NeJX0R3FbNhrZVPmVVVRIim62TLeLlKbxlj0nN9rZ9vTmZ9AEk9";
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 if (jwtKey != null)
 {
@@ -51,8 +55,8 @@ if (jwtKey != null)
         cfg.SaveToken = true;
         cfg.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidIssuer = builder.Configuration["JwtIssuer"],
-            ValidAudience = builder.Configuration["JwtAudience"],
+            ValidIssuer = "https://localhost:7258;",//builder.Configuration.GetValue<string>("JwtIssuer"),
+            ValidAudience = "https://localhost:44427;",//builder.Configuration.GetValue<string>("JwtAudience"),
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey == null ? "" : jwtKey)),
             ClockSkew = TimeSpan.Zero // remove delay of token when expire
         };
@@ -73,10 +77,13 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller}/{action=Index}/{id?}");
 
+app.MapControllers();
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+// TODO: need to fix appsettings keys not read issue
