@@ -63,6 +63,25 @@ if (jwtKey != null)
     });
 }
 
+// CORS
+var OfficeManagementOrigins = "_officeManagementSpecificOrigins";
+// TODO: allow specific origin does not work
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy(name: OfficeManagementOrigins, builder =>
+//     {
+//         builder.WithOrigins("http://localhost:4200")
+//                 .WithMethods("PUT", "POST", "GET")
+//                 .WithHeaders("Content-Type", "Authorization");
+//     });
+// });
+
+// allow all
+builder.Services.AddCors(options => options.AddPolicy(OfficeManagementOrigins, builder =>
+{
+    builder.WithOrigins("*").WithMethods("PUT", "POST", "GET").WithHeaders("Content-Type", "Authorization");
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,10 +91,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseRouting();
+app.UseCors(OfficeManagementOrigins);
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseRouting();
-
 
 //app.MapControllerRoute(
 //    name: "default",
@@ -86,4 +105,4 @@ app.MapFallbackToFile("index.html");
 
 app.Run();
 
-// TODO: need to fix appsettings keys not read issue
+// TODO: need to fix appsettings keys not read issue and fix CORS issue

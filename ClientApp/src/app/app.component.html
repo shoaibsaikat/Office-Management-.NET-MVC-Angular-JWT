@@ -1,6 +1,111 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <main class="container">
-    <router-outlet></router-outlet>
-  </main>
-</body>
+<div class="container bg-warning bg-opacity-10">
+  <!-- nav bar -->
+  <div class="card bg-danger bg-opacity-75">
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent" style="margin-left: 1em;">
+      <a class="navbar-brand" href="/"><strong>{{title}}</strong></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto"></ul>
+        <ul class="navbar-nav" style="margin-right: 1em;">
+          <li class="nav-item" *ngIf="isValidUser()">
+            <div class="nav-link"><h5>@<em>{{getUser().first_name}} {{getUser().last_name}}</em></h5></div>
+          </li>
+          <li class="nav-item" *ngIf="isValidUser()">
+            <!--<app-signout></app-signout>-->
+          </li>
+          <li class="nav-item" *ngIf="!isValidUser()">
+            <!-- <li class="nav-item"> -->
+            <a class="btn btn-outline-success" routerLink="/account/signin">Login</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <br>
+  <!-- page -->
+  <div class="container card bg-light bg-opacity-50">
+    <br>
+    <div class="row">
+      <!-- start: left pane -->
+      <div class="col-md-2">
+        <div *ngIf="isValidUser()">
+          <!-- user info change -->
+          <div class="card bg-light">
+            <div class="card-header bg-info bg-opacity-50"><strong>Account</strong></div>
+            <div class="card-body">
+              <div class="list-group">
+                <a class="nav-link list-group-item" routerLink="/account/password">Password</a>
+                <a class="nav-link list-group-item" routerLink="/account/profile">Profile</a>
+                <a class="nav-link list-group-item" routerLink="/account/manager">Manager</a>
+              </div>
+            </div>
+          </div>
+          <br>
+          <!-- asset -->
+          <div class="card bg-light">
+            <div class="card-header bg-info bg-opacity-50"><strong>Asset</strong></div>
+            <div class="card-body">
+              <div class="list-group">
+                <a *ngIf="getUser().can_manage_asset" class="nav-link list-group-item" routerLink="/asset/all_list">List</a>
+                <a *ngIf="getUser().can_manage_asset" class="nav-link list-group-item" routerLink="/asset/create">Create</a>
+                <a class="nav-link list-group-item" routerLink="/asset/my_list">Mine</a>
+                <a class="nav-link list-group-item" routerLink="/asset/pending_list">Incoming</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end: left pane -->
+      <!-- content body -->
+      <div class="col-md-8">
+        <!--<app-loading class="spinner" *ngIf="isLoading() | async"></app-loading>-->
+        <router-outlet></router-outlet>
+        <br><br>
+        <!--<app-message></app-message>-->
+      </div>
+      <!-- start: right pane -->
+      <div class="col-md-2" style="text-align: left;">
+        <div *ngIf="isValidUser()">
+          <!-- inventory -->
+          <div class="card bg-light">
+            <div class="card-header bg-info bg-opacity-50"><strong>Inventory</strong></div>
+            <div class="card-body">
+              <div class="list-group">
+                <a *ngIf="getUser().can_approve_inventory || getUser().can_distribute_inventory" class="nav-link list-group-item" routerLink="/inventory/list">List</a>
+                <a *ngIf="getUser().can_approve_inventory || getUser().can_distribute_inventory" class="nav-link list-group-item" routerLink="/requisition/history">History</a>
+                <a class="nav-link list-group-item" routerLink="/requisition/create">Request</a>
+                <a class="nav-link list-group-item" routerLink="/requisition/my_list">Mine</a>
+                <a *ngIf="getUser().can_approve_inventory" class="nav-link list-group-item" routerLink="/requisition/approval">Incoming</a>
+                <a *ngIf="getUser().can_distribute_inventory" class="nav-link list-group-item" routerLink="/requisition/distribution">Distribution</a>
+              </div>
+            </div>
+          </div>
+          <br>
+          <!-- leave -->
+          <div class="card bg-light">
+            <div class="card-header bg-info bg-opacity-50"><strong>Leave</strong></div>
+            <div class="card-body">
+              <div class="list-group">
+                <a class="nav-link list-group-item" routerLink="/leave/create">Apply</a>
+                <a class="nav-link list-group-item" routerLink="/leave/my_list">Mine</a>
+                <a *ngIf="getUser().can_approve_leave" class="nav-link list-group-item" routerLink="/leave/summary_list">Summary</a>
+                <a *ngIf="getUser().can_approve_leave" class="nav-link list-group-item" routerLink="/leave/request_list">Incoming</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+      <!-- end: right pane -->
+    </div>
+    <br>
+    <div class="card bg-warning bg-opacity-10">
+      <div class="card-body">
+        <div><small>Developed and &copy;Copyright protected by Mina Shoaib Rahman, 2022</small></div>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
