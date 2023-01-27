@@ -35,6 +35,25 @@ builder.Services.AddScoped<ITokenUtil, JWTTokenUtil>();
 builder.Services.AddScoped<IAccountUtil, AccountUtil>();
 builder.Services.AddScoped<ICommonUtil, CommonUtil>();
 
+// CORS
+var  OfficeManagementOrigins = "_officeManagementSpecificOrigins";
+// TODO: allow specific origin does not work
+// builder.Services.AddCors(options =>
+// {
+//     options.AddPolicy(name: OfficeManagementOrigins, builder =>
+//     {
+//         builder.WithOrigins("http://localhost:44427")
+//                 .WithMethods("PUT", "POST", "GET")
+//                 .WithHeaders("Content-Type", "Authorization");
+//     });
+// });
+
+// allow all
+builder.Services.AddCors(options => options.AddPolicy(OfficeManagementOrigins, builder =>
+{
+    builder.WithOrigins("*").WithMethods("PUT", "POST", "GET").WithHeaders("Content-Type", "Authorization");
+}));
+
 // JWT
 var jwtKey = builder.Configuration.GetValue<string>("JwtKey");
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
@@ -51,32 +70,13 @@ if (jwtKey != null)
         cfg.SaveToken = true;
         cfg.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidIssuer = "https://localhost:7258;",//builder.Configuration.GetValue<string>("JwtIssuer"),
-            ValidAudience = "https://localhost:44427;",//builder.Configuration.GetValue<string>("JwtAudience"),
+            ValidIssuer = builder.Configuration.GetValue<string>("JwtIssuer"),
+            ValidAudience = builder.Configuration.GetValue<string>("JwtAudience"),
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey == null ? "" : jwtKey)),
             ClockSkew = TimeSpan.Zero // remove delay of token when expire
         };
     });
 }
-
-// CORS
-var OfficeManagementOrigins = "_officeManagementSpecificOrigins";
-// TODO: allow specific origin does not work
-// builder.Services.AddCors(options =>
-// {
-//     options.AddPolicy(name: OfficeManagementOrigins, builder =>
-//     {
-//         builder.WithOrigins("http://localhost:4200")
-//                 .WithMethods("PUT", "POST", "GET")
-//                 .WithHeaders("Content-Type", "Authorization");
-//     });
-// });
-
-// allow all
-builder.Services.AddCors(options => options.AddPolicy(OfficeManagementOrigins, builder =>
-{
-    builder.WithOrigins("*").WithMethods("PUT", "POST", "GET").WithHeaders("Content-Type", "Authorization");
-}));
 
 var app = builder.Build();
 
