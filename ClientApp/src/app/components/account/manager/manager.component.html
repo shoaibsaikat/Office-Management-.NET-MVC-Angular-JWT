@@ -1,0 +1,15 @@
+<div class="row">
+    <span><b>Current Manager Name: </b>{{currentManagerName}}</span>
+    <br><br>
+    <span>Select New Manager:</span>
+    <form [formGroup]="managerForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <select class="form-select" formControlName="manager">
+                <option value="" disabled>Choose your manager</option>
+                <option *ngFor="let man of managerList" [ngValue]="man.id">{{man.first_name}} {{man.last_name}}</option>
+            </select>
+        </div>
+        <!-- TODO managerForm.get('manager') is never null or undefined, need to check why -->
+        <button type="submit" class="btn btn-cyan" [disabled]="!managerForm.get('manager') || !managerForm.get('manager')?.value">Save</button>
+      </form>
+</div>

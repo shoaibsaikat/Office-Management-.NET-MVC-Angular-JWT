@@ -18,3 +18,29 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+/* You can add global styles to this file, and also import other style files */
+.btn-cyan {
+  background-color: #81E1F5;
+  color: #001a1a;
+}
+
+.btn-yellow {
+  background-color: #FFC107;
+  color: #001a1a;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.spinner {
+  color: #81E1F5;
+  left: 50%;
+  margin-left: -4em;
+  text-align: center;
+}

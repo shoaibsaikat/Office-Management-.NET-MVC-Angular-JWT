@@ -1,0 +1,19 @@
+<div class="row">
+    <div *ngIf="messageService.messages.length || messageService.errorMessages.length">
+        <div *ngIf="messageService.messages.length">
+            <h4 class="text-secondary text-decoration-underline">Messages</h4>
+            <ul *ngFor='let message of messageService.messages'>
+                <li>{{message}}</li>
+            </ul>
+            <br><br>
+        </div>
+        <div *ngIf="messageService.errorMessages.length">
+            <h4 class="text-secondary text-decoration-underline">Error Messages</h4>
+            <ul *ngFor='let errorMessage of messageService.errorMessages' class="text-danger">
+                <li>{{errorMessage}}</li>
+            </ul>
+            <br><br>
+        </div>
+        <button type="button" class="btn btn-yellow" (click)="messageService.clearAll()">Clear messages</button>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+            <h3>Item List</h3>
+            </div>
+            <div class="col-md-2 float-right">
+                <a class="btn btn-cyan" routerLink="/inventory/create">Create Item</a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of inventoryList; let i=index;">
+                        <td>{{((currentPage-1)*getPageSize())+(i+1)}}</td>
+                        <td><a class="link-primary" (click)="onClick(item)" style="cursor: pointer;">{{item.name}}</a></td>
+                        <td>
+                            <form [formGroup]="inventoryFormList[i]" class="row" (ngSubmit)="onSubmit(i)">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <input type="number" min="0" class="form-control" formControlName="count" required>
+                                    </div>
+                                    <div class="col-md-2">{{item.unit}}</div>
+                                    <div class="col-md-5">
+                                        <!-- TODO: -->
+                                        <button type="submit" class="btn btn-cyan">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </td>  
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="hasPreviousPage()" class="col-md-2">
+            <a class="cursor" (click)="onFirstClick()">&laquo; first</a>
+            &nbsp;
+            <a class="cursor" (click)="onPreviousClick()">previous</a>
+        </div>
+        <div class="col-md-2 current text-center">Page {{currentPage}} of {{totalPage}}</div>
+        <div *ngIf="hasNextPage()" class="col-md-2">
+            <a class="cursor" (click)="onNextClick()">next</a>
+            &nbsp;
+            <a class="cursor" (click)="onLastClick()">last &raquo;</a>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>

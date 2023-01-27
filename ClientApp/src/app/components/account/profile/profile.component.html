@@ -1,0 +1,26 @@
+<div class="row">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" required>
+          <div *ngIf="firstName?.invalid && (firstName?.dirty || firstName?.touched)" class="alert alert-danger">
+            <div *ngIf="firstName?.errors?.required">First Name is required.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" required>
+          <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)" class="alert alert-danger">
+            <div *ngIf="lastName?.errors?.required">Last Name is required.</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="alert alert-danger">
+            <div *ngIf="email?.errors">Invalid email address.</div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-cyan" [disabled]="firstName?.errors || lastName?.errors || email?.errors">Save</button>
+      </form>
+</div>

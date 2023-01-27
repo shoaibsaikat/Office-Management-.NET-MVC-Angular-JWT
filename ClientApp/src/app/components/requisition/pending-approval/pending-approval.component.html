@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Requisition History</h3>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Requested</th>
+                    <th scope="col">Select distributor</th>
+                    <th scope="col">Deny</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of requisitionList; let i=index;">
+                        <td><a class="link-primary" (click)="onDetailClick(item)" style="cursor: pointer;">{{((currentPage-1)*getPageSize())+(i+1)}}</a></td>
+                        <td>{{item.amount}} {{item.item_name}}</td>
+                        <td>{{item.user_name}}</td>
+                        <td>{{item.date|date}}</td>
+                        <td>
+                            <form class="row" [formGroup]="requisitionFormList[i]" (ngSubmit)="onApproveClick(i)">
+                                <div class="col-md-6">
+                                    <select class="form-select" formControlName="distributor">
+                                        <option value="" disabled>Choose distributor</option>
+                                        <option *ngFor="let user of distributorList" [ngValue]="user.id">{{user.first_name}} {{user.last_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-cyan" [disabled]="!isDistributorSelected(i)">Approve</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <form class="row" [formGroup]="requisitionFormList[i]" (ngSubmit)="onDenyClick(i)">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-cyan">Deny</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="hasPreviousPage()" class="col-md-2">
+            <a class="cursor" (click)="onFirstClick()">&laquo; first</a>
+            &nbsp;
+            <a class="cursor" (click)="onPreviousClick()">previous</a>
+        </div>
+        <div class="col-md-2 current text-center">Page {{currentPage}} of {{totalPage}}</div>
+        <div *ngIf="hasNextPage()" class="col-md-2">
+            <a class="cursor" (click)="onNextClick()">next</a>
+            &nbsp;
+            <a class="cursor" (click)="onLastClick()">last &raquo;</a>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>

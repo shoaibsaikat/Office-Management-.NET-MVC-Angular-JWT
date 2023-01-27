@@ -7,8 +7,6 @@ using System.Text;
 using Office_Management_.NET_MVC_Angular_JWT.Models;
 using Office_Management_.NET_MVC_Angular_JWT.Utils;
 using Office_Management_.NET_MVC_Angular_JWT.Repositories;
-using Microsoft.Extensions.Configuration;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // MariaDB
-//var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
-var connectionString = "server=localhost;port=3306;user=root;password=;database=inventory_dotnet_test;AllowZeroDateTime=true;";
+var connectionString = builder.Configuration.GetConnectionString("MariaDbConnectionString");
 builder.Services.AddDbContext<ApplicationDbContext>(dbContextOptions => dbContextOptions
         .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
         // The following three options help with debugging, but should
@@ -39,8 +36,7 @@ builder.Services.AddScoped<IAccountUtil, AccountUtil>();
 builder.Services.AddScoped<ICommonUtil, CommonUtil>();
 
 // JWT
-//var jwtKey = builder.Configuration.GetValue<string>("JwtKey");
-var jwtKey = "BprQAVEPuh9U31ruRa70Z2cwqiyzOsavobrkpD6lXvy62w4p4P8ZLGUSAsWFvwTdCysc2NeJX0R3FbNhrZVPmVVVRIim62TLeLlKbxlj0nN9rZ9vTmZ9AEk9";
+var jwtKey = builder.Configuration.GetValue<string>("JwtKey");
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 if (jwtKey != null)
 {
@@ -100,6 +96,7 @@ app.UseStaticFiles();
 //    name: "default",
 //    pattern: "{controller}/{action=Index}/{id?}");
 
+app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("index.html");
 

@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6">
+    <form #signInForm="ngForm" (ngSubmit)="login(signInForm)">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required ngModel>
+      </div>
+      <div class="mb-3">
+        <label for="password1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password1" name="password1" required ngModel>
+      </div>
+      <button type="submit" class="btn btn-cyan">Login</button>
+    </form>
+  </div>
+  <div class="col-lg-3"></div>
+</div>

@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="card-header"><h3>My Asset List</h3></div>
+    <div class="card-body">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Model</th>
+                        <th>Serial</th>
+                        <th>Warranty Ends</th>
+                        <th>Assign to</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of assetList; let i=index;">
+                        <td>{{((currentPage-1)*getPageSize())+(i+1)}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.model}}</td>
+                        <td>{{item.serial}}</td>
+                        <td>{{item.purchase_date|date}}</td>
+                        <td *ngIf="!item.next_user">
+                            <form [formGroup]="assignFormList[i]" class="row" (ngSubmit)="onSubmit(i)">
+                                <div class="col-md-7">
+                                    <select class="form-select" formControlName="user">
+                                        <option value="" disabled>Choose user</option>
+                                        <option *ngFor="let user of userList" [ngValue]="user.id">{{user.first_name}} {{user.last_name}}</option>
+                                        <!-- <option *ngFor="let user of userList" [ngValue]="user.id" [attr.selected]="user.id===item.next_user">{{user.first_name}} {{user.last_name}}</option> -->
+                                        <!-- TODO: need to fix why selected not working -->
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-cyan col-md-4" [disabled]="!assignFormList[i].get('user')?.value">Assign</button>
+                                <div class="col-md-1"></div>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="hasPreviousPage()" class="col-md-2">
+            <a class="cursor" (click)="onFirstClick()">&laquo; first</a>
+            &nbsp;
+            <a class="cursor" (click)="onPreviousClick()">previous</a>
+        </div>
+        <div class="col-md-2 current text-center">Page {{currentPage}} of {{totalPage}}</div>
+        <div *ngIf="hasNextPage()" class="col-md-2">
+            <a class="cursor" (click)="onNextClick()">next</a>
+            &nbsp;
+            <a class="cursor" (click)="onLastClick()">last &raquo;</a>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>

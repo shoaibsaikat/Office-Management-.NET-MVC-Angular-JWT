@@ -13,7 +13,7 @@
             <div class="nav-link"><h5>@<em>{{getUser().first_name}} {{getUser().last_name}}</em></h5></div>
           </li>
           <li class="nav-item" *ngIf="isValidUser()">
-            <!--<app-signout></app-signout>-->
+            <app-signout></app-signout>
           </li>
           <li class="nav-item" *ngIf="!isValidUser()">
             <!-- <li class="nav-item"> -->
@@ -60,10 +60,10 @@
       <!-- end: left pane -->
       <!-- content body -->
       <div class="col-md-8">
-        <!--<app-loading class="spinner" *ngIf="isLoading() | async"></app-loading>-->
+        <app-loading class="spinner" *ngIf="isLoading() | async"></app-loading>
         <router-outlet></router-outlet>
         <br><br>
-        <!--<app-message></app-message>-->
+        <app-message></app-message>
       </div>
       <!-- start: right pane -->
       <div class="col-md-2" style="text-align: left;">

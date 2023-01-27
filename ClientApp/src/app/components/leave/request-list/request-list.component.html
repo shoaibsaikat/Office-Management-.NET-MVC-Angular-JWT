@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="card-header">
+        <h3>Incoming request</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">End</th>
+                    <th scope="col">Days</th>
+                    <th scope="col">Approve</th>
+                    <th scope="col">Deny</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of leaveList; let i=index;">
+                        <td>{{((currentPage-1)*getPageSize())+(i+1)}}</td>
+                        <td><a class="cursor" (click)="onItemSelected(item)">{{item.user_first_name}} {{item.user_last_name}}</a></td>
+                        <td>{{item.start_date|date}}</td>
+                        <td>{{item.end_date|date}}</td>
+                        <td>{{item.day_count}}</td>
+                        <td>
+                            <button type="submit" class="btn btn-cyan" (click)="onApprove(i)">Approve</button>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-cyan" (click)="onDeny(i)">Deny</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="hasPreviousPage()" class="col-md-2">
+            <a class="cursor" (click)="onFirstClick()">&laquo; first</a>
+            &nbsp;
+            <a class="cursor" (click)="onPreviousClick()">previous</a>
+        </div>
+        <div class="col-md-2 current text-center">Page {{currentPage}} of {{totalPage}}</div>
+        <div *ngIf="hasNextPage()" class="col-md-2">
+            <a class="cursor" (click)="onNextClick()">next</a>
+            &nbsp;
+            <a class="cursor" (click)="onLastClick()">last &raquo;</a>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>

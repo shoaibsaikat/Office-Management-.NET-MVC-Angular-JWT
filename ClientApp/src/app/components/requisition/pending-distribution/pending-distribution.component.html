@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Requisition History</h3>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Request</th>
+                    <th scope="col">User</th>
+                    <th scope="col">Item</th>
+                    <th scope="col">Requested at</th>
+                    <th scope="col">Distribute</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of requisitionList; let i=index;">
+                        <td>{{((currentPage-1)*getPageSize())+(i+1)}}</td>
+                        <td><a class="link-primary" (click)="onDetailClick(item)" style="cursor: pointer;">{{item.title}}</a></td>
+                        <td>{{item.user_name}}</td>
+                        <td>{{item.amount}} {{item.item_name}}</td>
+                        <td>{{item.date|date}}</td>
+                        <td><a type="submit" class="btn btn-cyan" (click)="onApproveClick(i)">Distribute</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="hasPreviousPage()" class="col-md-2">
+            <a class="cursor" (click)="onFirstClick()">&laquo; first</a>
+            &nbsp;
+            <a class="cursor" (click)="onPreviousClick()">previous</a>
+        </div>
+        <div class="col-md-2 current text-center">Page {{currentPage}} of {{totalPage}}</div>
+        <div *ngIf="hasNextPage()" class="col-md-2">
+            <a class="cursor" (click)="onNextClick()">next</a>
+            &nbsp;
+            <a class="cursor" (click)="onLastClick()">last &raquo;</a>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>

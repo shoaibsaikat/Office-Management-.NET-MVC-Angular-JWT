@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="card-header"><h3>Pending Approval</h3></div>
+    <div class="card-body">
+        <div class="row">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Serial</th>
+                        <th scope="col">Warranty Ends</th>
+                        <th scope="col">Assigned by</th>
+                        <th scope="col">Approve</th>
+                        <th scope="col">Decline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of assetList; let i=index;">
+                        <td>{{((currentPage-1)*getPageSize())+(i+1)}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.model}}</td>
+                        <td>{{item.serial}}</td>
+                        <td>{{item.warranty}}</td>
+                        <td>{{item.user}}</td>
+                        <td><div type="submit" class="btn btn-cyan" (click)="onApprove(item.id, i)">Approve</div></td>
+                        <td><div type="submit" class="btn btn-cyan" (click)="onDecline(item.id, i)">Decline</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div *ngIf="hasPreviousPage()" class="col-md-2">
+            <a class="cursor" (click)="onFirstClick()">&laquo; first</a>
+            &nbsp;
+            <a class="cursor" (click)="onPreviousClick()">previous</a>
+        </div>
+        <div class="col-md-2 current text-center">Page {{currentPage}} of {{totalPage}}</div>
+        <div *ngIf="hasNextPage()" class="col-md-2">
+            <a class="cursor" (click)="onNextClick()">next</a>
+            &nbsp;
+            <a class="cursor" (click)="onLastClick()">last &raquo;</a>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
